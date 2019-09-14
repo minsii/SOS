@@ -1135,7 +1135,11 @@ int query_for_fabric(struct fabric_info *info)
     hints.caps |= FI_RMA_EVENT; /* want to use remote counters */
 #endif /* ENABLE_TARGET_CNTR */
     hints.addr_format         = FI_FORMAT_UNSPEC;
+#ifdef DISABLE_FI_DOMAIN_THREAD
+    domain_attr.data_progress = FI_PROGRESS_MANUAL;
+#else
     domain_attr.data_progress = FI_PROGRESS_AUTO;
+#endif
     domain_attr.resource_mgmt = FI_RM_ENABLED;
 #ifdef ENABLE_MR_SCALABLE
     domain_attr.mr_mode       = FI_MR_SCALABLE; /* VA space-doesn't have to be pre-allocated */
